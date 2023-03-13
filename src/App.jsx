@@ -8,6 +8,7 @@ import Adaptable from './components/Adaptable'
 import Footer from './components/Footer'
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import Navbar from './components/Navbar'
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
   return (
 
     <div className="App">
-
+      <Navbar />
       <Hero />
       <Features />
       <Info />
