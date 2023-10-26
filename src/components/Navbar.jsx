@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import cart from '../assets/cart.png'
 import logo from '../assets/momo__mad-symulator - copia.jpg'
 import { Link } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link';
+import { PRODUCTS } from './products'
+import Product from './Product'
+import { ShopContext } from './context/ShopContext'
+
+function calculateTotalItems(cartItems) {
+    const totalItems = Object.values(cartItems).reduce((total, count) => total + count, 0);
+    return totalItems
+}
 
 function Navbar() {
+    const { cartItems } = useContext(ShopContext)
+
     return (
         <div className="navbar py-8  bg-black h-28 w-full">
             <div className="navbar-start">
@@ -26,13 +36,14 @@ function Navbar() {
                     <label tabIndex={0} className="btn btn-ghost btn-circle">
                         <div className=" indicator">
                             <img src={cart} alt='cart' />
-                            <span className="badge badge-sm indicator-item">8</span>
+                            <span className="badge badge-sm indicator-item">{calculateTotalItems(cartItems)}</span>
                         </div>
                     </label>
                     <div tabIndex={0} className="mt-3 card card-compact dropdown-content translate-x-24 md:translate-x-10 w-52 bg-base-100 shadow">
                         <div className="card-body">
-                            <span className="font-bold text-lg text-white">8 Items</span>
-                            <span className=" text-mustard">Subtotal: $999</span>
+                            {PRODUCTS.map((product) => (
+                                <Product key={product.id} data={product} />
+                            ))}
                             <div className="card-actions">
                                 <Link to='/cart'>
                                     <button className="btn bg-yellow btn-block text-black font-bold hover:bg-mustard">
